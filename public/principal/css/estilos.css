@@ -1,0 +1,32 @@
+.input {
+    width: 100%;
+    border: none;
+    background: white;
+    padding: 15px;
+    border-bottom: 2px solid rgb(159, 159, 178);
+    border-right: 2px solid rgb(159, 159, 178);
+    color: rgb(7, 7, 7) !important;
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: -5px;
+    outline: none !important;
+}
+.input:focus {
+    border-bottom: 2px solid rgb(0, 85, 255);
+    border-right: 2px solid rgba(0, 85, 255);
+}
+
+.input::placeholder {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.error__text {
+    color: red;
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.input__select {
+    font-size: 17px;
+}
