@@ -651,6 +651,7 @@ class ComposerStaticInitcf88c4864339b109aba5cf9be63ca2e1
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\TimestampModeloCertificado' => __DIR__ . '/../..' . '/app/Console/Commands/TimestampModeloCertificado.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Exports\\CursoExport' => __DIR__ . '/../..' . '/app/Exports/CursoExport.php',

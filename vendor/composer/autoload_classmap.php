@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Console\\Commands\\TimestampModeloCertificado' => $baseDir . '/app/Console/Commands/TimestampModeloCertificado.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Exports\\CursoExport' => $baseDir . '/app/Exports/CursoExport.php',

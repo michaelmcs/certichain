@@ -52,7 +52,7 @@
     @else
         @if ($modo == 'notiene')
             <div class="container2">
-            <h1 class="titulo">VICERRECTORADO ACADEMICO UNA - PUNO</h1>
+            <h1 class="titulo">[ORGANIZACION]</h1>
                 <h1 class="titulo">CERTIFICADO OTORGADO A:</h1>
                 @foreach ($datosPersona as $item)
                     <div>
