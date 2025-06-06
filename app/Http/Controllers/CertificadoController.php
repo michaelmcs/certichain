@@ -76,6 +76,38 @@ public function index()
         return response()->json(['success' => true]);
     }
 
+    public function registrarEnBlockchain($id)
+    {
+        $certificado = DB::table('modelo_certificado')->where('id_modelo_certificado', $id)->first();
+
+        if (!$certificado) {
+            return back()->with('error', 'Certificado no encontrado');
+        }
+
+        $rutaPDF = public_path("modelo_certificados/" . $certificado->modelo_pdf);
+
+        if (!file_exists($rutaPDF)) {
+            return back()->with('error', 'Archivo PDF no encontrado: ' . $rutaPDF);
+        }
+
+        $hash = hash_file('sha256', $rutaPDF);
+        $cmd = "ots stamp \"$rutaPDF\"";
+        exec($cmd, $output, $exitCode);
+
+        if ($exitCode !== 0) {
+            return back()->with('error', 'Error ejecutando ots. Asegúrate de tener opentimestamps-cli instalado');
+        }
+
+        $otsName = $certificado->modelo_pdf . '.ots';
+
+        DB::table('modelo_certificado')->where('id_modelo_certificado', $id)->update([
+            'hash_certificado' => $hash,
+            'archivo_ots' => $otsName,
+        ]);
+
+        return back()->with('success', 'Certificado registrado en blockchain correctamente');
+    }
+    
     public function verPDF($id)
     {
         $certificado = DB::table('certificado')->where('id_certificado', $id)->first();

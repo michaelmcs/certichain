@@ -41,6 +41,8 @@ Route::middleware('verified')->group(function () {
     Route::get('certificado/ver/certificado/{id}', [CertificadoController::class, 'ver'])->name('certificado.ver');
     Route::get('certificado/eliminarModelo/{id}', [CertificadoController::class, 'delete'])->name('certificado.eliminarModelo');
     Route::post('certificado/guardar-posicion', [CertificadoController::class, 'guardarPosicion'])->name('certificado.guardarPosicion');
+    Route::get('certificado/blockchain/{id}', [CertificadoController::class, 'registrarEnBlockchain'])->name('certificado.blockchain');
+
 });
 
 // ---------------------

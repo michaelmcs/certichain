@@ -93,6 +93,12 @@
 
                                 <a href="{{ route('certificado.ajustar', $item->id_certificado) }}" class="btn btn-sm btn-primary m-1"><i class="fas fa-wrench"></i></a>
 
+                                <a href="{{ route('certificado.blockchain', $item->id_certificado) }}"
+   class="btn btn-sm btn-dark m-1"
+   title="Registrar en Blockchain">
+   <i class="fas fa-link"></i>
+</a>
+
                                 @else
                                     <a style="top: 0" href="" class="btn btn-sm btn-success m-1" data-toggle="modal"
                                         data-target="#agregar{{ $key }}"><i class="fas fa-plus"></i></a>
