@@ -108,43 +108,43 @@ public function index()
         return back()->with('success', 'Certificado registrado en blockchain correctamente');
     }
     
-    public function verPDF($id)
-    {
-        $certificado = DB::table('certificado')->where('id_certificado', $id)->first();
-        if (!$certificado) abort(404);
+public function verPDF($id)
+{
+    $certificado = DB::table('modelo_certificado')->where('id_modelo_certificado', $id)->first();
+    if (!$certificado) abort(404);
 
-        $elementos = DB::table('certificado_elemento')
-            ->where('id_certificado', $id)
-            ->get();
+    $elementos = DB::table('certificado_elemento')
+        ->where('id_modelo_certificado', $id)
+        ->get();
 
-        $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->AddPage();
-        $pdf->SetAutoPageBreak(false, 0);
-        $pdf->SetMargins(0, 0, 0);
-        $pdf->Image(public_path("modelo_certificados/{$certificado->modelo}"), 0, 0, 297, 210);
+    $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf->AddPage();
+    $pdf->SetAutoPageBreak(false, 0);
+    $pdf->SetMargins(0, 0, 0);
+    $pdf->Image(public_path("modelo_certificados/{$certificado->modelo_pdf}"), 0, 0, 297, 210);
 
-        foreach ($elementos as $el) {
-            if ($el->tipo === 'texto') {
-                $texto = $el->contenido ?? strtoupper($el->nombre);
-                $fuente = $el->fuente ?? 'helvetica';
-                $tam = $el->tamano_fuente ?? 12;
-                $alto = round($tam * 0.35, 2);
-                $ancho = $el->forzar_ancho ?? ($el->ancho ?? mb_strlen($texto) * $tam * 0.6 / 3.78);
+    foreach ($elementos as $el) {
+        if ($el->tipo === 'texto') {
+            $texto = $el->contenido ?? strtoupper($el->nombre);
+            $fuente = $el->fuente ?? 'helvetica';
+            $tam = $el->tamano_fuente ?? 12;
+            $alto = round($tam * 0.35, 2);
+            $ancho = $el->forzar_ancho ?? ($el->ancho ?? mb_strlen($texto) * $tam * 0.6 / 3.78);
 
-                $pdf->SetFont($fuente, 'B', $tam);
-                $pdf->SetDrawColor(255, 0, 0);
-                $pdf->Rect($el->x, $el->y, $ancho, $alto);
-                $pdf->MultiCell($ancho, $alto, $texto, 0, 'C', false, 1, $el->x, $el->y, true);
-            } elseif ($el->tipo === 'imagen' && $el->nombre === 'qr') {
-                $rutaQR = public_path("qr/prueba.png");
-                QrCode::format('png')->size(500)->generate(route("welcome") . "/verMiCertificadoQR/prueba", $rutaQR);
-                $pdf->Image($rutaQR, $el->x, $el->y, $el->ancho, $el->alto);
-                $pdf->Rect($el->x, $el->y, $el->ancho, $el->alto);
-            }
+            $pdf->SetFont($fuente, 'B', $tam);
+            $pdf->SetDrawColor(255, 0, 0);
+            $pdf->Rect($el->x, $el->y, $ancho, $alto);
+            $pdf->MultiCell($ancho, $alto, $texto, 0, 'C', false, 1, $el->x, $el->y, true);
+        } elseif ($el->tipo === 'imagen' && $el->nombre === 'qr') {
+            $rutaQR = public_path("qr/prueba.png");
+            QrCode::format('png')->size(500)->generate(route("welcome") . "/verMiCertificadoQR/prueba", $rutaQR);
+            $pdf->Image($rutaQR, $el->x, $el->y, $el->ancho, $el->alto);
+            $pdf->Rect($el->x, $el->y, $el->ancho, $el->alto);
         }
-
-        $pdf->Output("certificado-$id.pdf", 'I');
     }
+
+    $pdf->Output("certificado-$id.pdf", 'I');
+}
 
    public function store(Request $request)
 {
@@ -351,9 +351,9 @@ public function buscar($id)
 {
     try {
         $sql = DB::select("
-            SELECT curso.id_curso, curso.nombre, curso.descripcion, certificado.id_certificado
+            SELECT curso.id_curso, curso.nombre, curso.descripcion, modelo_certificado.id_modelo_certificado
             FROM curso
-            LEFT JOIN certificado ON curso.id_curso = certificado.id_curso
+            LEFT JOIN modelo_certificado ON curso.id_curso = modelo_certificado.id_curso
             WHERE curso.nombre LIKE ? OR curso.descripcion LIKE ?
             ORDER BY curso.id_curso DESC
             LIMIT 10

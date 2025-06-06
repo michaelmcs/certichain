@@ -5,13 +5,22 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+// Asegúrate de importar tu clase
+use App\Console\Commands\TimestampModeloCertificado;
+
 class Kernel extends ConsoleKernel
 {
     /**
-     * Define the application's command schedule.
+     * Los comandos disponibles para Artisan.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @var array
+     */
+    protected $commands = [
+        TimestampModeloCertificado::class,
+    ];
+
+    /**
+     * Define el cron de los comandos programados.
      */
     protected function schedule(Schedule $schedule)
     {
@@ -19,9 +28,7 @@ class Kernel extends ConsoleKernel
     }
 
     /**
-     * Register the commands for the application.
-     *
-     * @return void
+     * Registrar los comandos de consola.
      */
     protected function commands()
     {
