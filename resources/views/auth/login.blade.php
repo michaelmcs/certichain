@@ -157,7 +157,7 @@
             </form>
         </div>
         <div>
-            <p class="copy ">Copyright © {{ date('Y') }} VRA - SUOP C </p>
+            <p class="copy ">Copyright © {{ date('Y') }}  </p>
 
         </div>
     </div>
